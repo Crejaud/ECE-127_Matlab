@@ -1,0 +1,546 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Corentin Rejaud, Recitation Week 12</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-04-21"><meta name="DC.source" content="Week12_Matlab.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Corentin Rejaud, Recitation Week 12</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Question 1</a></li><li><a href="#2">Question 2</a></li><li><a href="#3">Question 3</a></li></ul></div><h2>Question 1<a name="1"></a></h2><p>Part A</p><pre class="codeinput">log10P = @(C,T) C(1) - ( C(2) ./ (C(3) + T) )
+Ti = [250 260 270 280 290 300 310 320 330 340 350];
+Pi = [260 504 1184 2910 3913 9462 18841 16952 41529 86903 77537];
+ce = [10.33 1642.89 -42.85];
+Pe = log10P(ce,Ti);
+c0 = [1 1000 -1];
+c = nlinfit(Ti,Pe, log10P, c0)
+P0 = log10P(c,Ti);
+
+figure;
+plot(Ti, P0, <span class="string">'r-'</span>, Ti, Pe, <span class="string">'k:'</span>, Ti, log10(Pi), <span class="string">'b.'</span>);
+title(<span class="string">'Antoine Equation'</span>);
+xlabel(<span class="string">'T(K)'</span>);
+ylabel(<span class="string">'log_{10}(P)'</span>);
+xlim([240 360]);
+ylim([2 6]);
+set(gca,<span class="string">'xtick'</span>,[240:20:360]);
+set(gca,<span class="string">'ytick'</span>,[2:1:6]);
+grid <span class="string">off</span>;
+legend(<span class="string">'nlinfit method'</span>, <span class="string">'known model'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'nw'</span>);
+
+<span class="comment">% Part B</span>
+a = 10.33;
+y = 1./(a - log10(Pi))
+x = Ti;
+p = polyfit(x, y, 1)
+b = 1/p(1)
+c = b * p(2)
+figure;
+C0 = [a b c];
+plot(Ti, log10P(C0,Ti), <span class="string">'r-'</span>, Ti, Pe, <span class="string">'k:'</span>, Ti, log10(Pi), <span class="string">'b.'</span>);
+title(<span class="string">'Antoine Equation'</span>);
+xlabel(<span class="string">'T(K)'</span>);
+ylabel(<span class="string">'log_{10}(P)'</span>);
+xlim([240 360]);
+ylim([2 6]);
+set(gca,<span class="string">'xtick'</span>,[240:20:360]);
+set(gca,<span class="string">'ytick'</span>,[2:1:6]);
+grid <span class="string">off</span>;
+legend(<span class="string">'polyfit method'</span>, <span class="string">'known model'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'nw'</span>);
+</pre><pre class="codeoutput">
+log10P = 
+
+    @(C,T)C(1)-(C(2)./(C(3)+T))
+
+
+c =
+
+   1.0e+03 *
+
+    0.0103    1.6429   -0.0429
+
+
+y =
+
+  Columns 1 through 7
+
+    0.1263    0.1311    0.1378    0.1456    0.1484    0.1574    0.1652
+
+  Columns 8 through 11
+
+    0.1639    0.1751    0.1855    0.1838
+
+
+p =
+
+    0.0006   -0.0263
+
+
+b =
+
+   1.6418e+03
+
+
+c =
+
+  -43.2596
+
+</pre><img vspace="5" hspace="5" src="Week12_Matlab_01.png" alt=""> <img vspace="5" hspace="5" src="Week12_Matlab_02.png" alt=""> <h2>Question 2<a name="2"></a></h2><pre class="codeinput">clear <span class="string">all</span>;
+<span class="comment">% Part A</span>
+xi = [1.0 1.4 1.9 2.1 2.7 3.0 3.3 3.9 4.2]';
+yi = [0.18 0.21 0.21 0.20 0.20 0.19 0.18 0.16 0.16]';
+
+A = [1./xi xi]
+Y = [1./yi]
+
+P1 = A\Y
+
+<span class="comment">% Part B</span>
+one = [1 1 1 1 1 1 1 1 1]';
+A = [one xi.^2]
+Y = [xi./yi]
+
+P2 = A\Y
+
+<span class="comment">% Part C</span>
+y = @(C, X) 1 ./ (C(1)./X + C(2).*X);
+C0 = [4 1];
+P3 = nlinfit(xi, yi, y, C0)
+
+<span class="comment">% Part D</span>
+names = {<span class="string">'basis {x^{-1},x}'</span>
+         <span class="string">'basis {1, x^2}  '</span>
+         <span class="string">'nlinfit         '</span>}
+a = [P1(1);P2(1);P3(1)]
+b = [P1(2);P2(2);P3(2)]
+fprintf(<span class="string">'   method            a        b  \n'</span>);
+fprintf(<span class="string">'---------------------------------\n'</span>);
+<span class="keyword">for</span> i = 1:3,
+    fprintf(<span class="string">'%-s   %6.4f   %6.4f\n'</span>, names{i}, a(i), b(i));
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+A =
+
+    1.0000    1.0000
+    0.7143    1.4000
+    0.5263    1.9000
+    0.4762    2.1000
+    0.3704    2.7000
+    0.3333    3.0000
+    0.3030    3.3000
+    0.2564    3.9000
+    0.2381    4.2000
+
+
+Y =
+
+    5.5556
+    4.7619
+    4.7619
+    5.0000
+    5.0000
+    5.2632
+    5.5556
+    6.2500
+    6.2500
+
+
+P1 =
+
+    4.3012
+    1.2858
+
+
+A =
+
+    1.0000    1.0000
+    1.0000    1.9600
+    1.0000    3.6100
+    1.0000    4.4100
+    1.0000    7.2900
+    1.0000    9.0000
+    1.0000   10.8900
+    1.0000   15.2100
+    1.0000   17.6400
+
+
+Y =
+
+    5.5556
+    6.6667
+    9.0476
+   10.5000
+   13.5000
+   15.7895
+   18.3333
+   24.3750
+   26.2500
+
+
+P2 =
+
+    4.4293
+    1.2696
+
+
+P3 =
+
+    4.2925    1.2933
+
+
+names = 
+
+    'basis {x^{-1},x}'
+    'basis {1, x^2}  '
+    'nlinfit         '
+
+
+a =
+
+    4.3012
+    4.4293
+    4.2925
+
+
+b =
+
+    1.2858
+    1.2696
+    1.2933
+
+   method            a        b  
+---------------------------------
+basis {x^{-1},x}   4.3012   1.2858
+basis {1, x^2}     4.4293   1.2696
+nlinfit            4.2925   1.2933
+</pre><h2>Question 3<a name="3"></a></h2><pre class="codeinput">clear <span class="string">all</span>;
+hi = 0:3:33
+pi = [1.2 0.92 0.66 0.47 0.31 0.19 0.12 0.075 0.046 0.029 0.018 0.011]
+
+<span class="comment">% Part A</span>
+
+<span class="comment">% plot(hi, pi, 'r-', hi, pi, 'b.');</span>
+p = polyfit(hi, log(pi), 1)
+h = linspace(0,35,201);
+y = exp(polyval(p,h));
+
+figure;
+plot(h, y, <span class="string">'r-'</span>, hi, pi, <span class="string">'b.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'\it{h}, km'</span>);
+ylabel(<span class="string">'\it{p}, kg/m^3'</span>);
+xlim([0 35]);
+ylim([0 1.6]);
+set(gca,<span class="string">'xtick'</span>,[0:5:35]);
+set(gca,<span class="string">'ytick'</span>,[0:0.2:1.6]);
+legend(<span class="string">'linear'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+figure;
+plot(h, log(y), <span class="string">'r-'</span>, hi, log(pi), <span class="string">'b.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'\it{h}, km'</span>);
+ylabel(<span class="string">'log(\it{p})'</span>);
+xlim([0 35]);
+ylim([-5 1]);
+set(gca,<span class="string">'xtick'</span>,[0:5:35]);
+set(gca,<span class="string">'ytick'</span>,[-5:1:1]);
+legend(<span class="string">'linear'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+<span class="comment">% Part B</span>
+p = polyfit(hi, log(pi), 2)
+h = linspace(0,35,201);
+y = exp(polyval(p,h));
+
+figure;
+plot(h, y, <span class="string">'r-'</span>, hi, pi, <span class="string">'b.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'\it{h}, km'</span>);
+ylabel(<span class="string">'\it{p}, kg/m^3'</span>);
+xlim([0 35]);
+ylim([0 1.6]);
+set(gca,<span class="string">'xtick'</span>,[0:5:35]);
+set(gca,<span class="string">'ytick'</span>,[0:0.2:1.6]);
+legend(<span class="string">'quadratic'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+figure;
+plot(h, log(y), <span class="string">'r-'</span>, hi, log(pi), <span class="string">'b.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'\it{h}, km'</span>);
+ylabel(<span class="string">'log(\it{p})'</span>);
+xlim([0 35]);
+ylim([-5 1]);
+set(gca,<span class="string">'xtick'</span>,[0:5:35]);
+set(gca,<span class="string">'ytick'</span>,[-5:1:1]);
+legend(<span class="string">'quadratic'</span>, <span class="string">'data'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+<span class="comment">% Part C</span>
+h = [5 10]
+
+    <span class="comment">% Part I</span>
+r = exp(polyval(p,h))
+
+    <span class="comment">% Part II</span>
+spline = interp1(hi, pi, h, <span class="string">'spline'</span>)
+
+    <span class="comment">% Part III</span>
+pchip = interp1(hi, pi, h, <span class="string">'pchip'</span>)
+</pre><pre class="codeoutput">
+hi =
+
+     0     3     6     9    12    15    18    21    24    27    30    33
+
+
+pi =
+
+  Columns 1 through 7
+
+    1.2000    0.9200    0.6600    0.4700    0.3100    0.1900    0.1200
+
+  Columns 8 through 12
+
+    0.0750    0.0460    0.0290    0.0180    0.0110
+
+
+p =
+
+   -0.1460    0.4282
+
+
+p =
+
+   -0.0011   -0.1113    0.2547
+
+
+h =
+
+     5    10
+
+
+r =
+
+    0.7205    0.3817
+
+
+spline =
+
+    0.7397    0.4139
+
+
+pchip =
+
+    0.7400    0.4129
+
+</pre><img vspace="5" hspace="5" src="Week12_Matlab_03.png" alt=""> <img vspace="5" hspace="5" src="Week12_Matlab_04.png" alt=""> <img vspace="5" hspace="5" src="Week12_Matlab_05.png" alt=""> <img vspace="5" hspace="5" src="Week12_Matlab_06.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Corentin Rejaud, Recitation Week 12
+%% Question 1
+% Part A
+log10P = @(C,T) C(1) - ( C(2) ./ (C(3) + T) )
+Ti = [250 260 270 280 290 300 310 320 330 340 350];
+Pi = [260 504 1184 2910 3913 9462 18841 16952 41529 86903 77537];
+ce = [10.33 1642.89 -42.85];
+Pe = log10P(ce,Ti);
+c0 = [1 1000 -1];
+c = nlinfit(Ti,Pe, log10P, c0)
+P0 = log10P(c,Ti);
+
+figure;
+plot(Ti, P0, 'r-', Ti, Pe, 'k:', Ti, log10(Pi), 'b.');
+title('Antoine Equation');
+xlabel('T(K)');
+ylabel('log_{10}(P)');
+xlim([240 360]);
+ylim([2 6]);
+set(gca,'xtick',[240:20:360]);
+set(gca,'ytick',[2:1:6]);
+grid off;
+legend('nlinfit method', 'known model', 'data', 'location', 'nw');
+
+% Part B
+a = 10.33;
+y = 1./(a - log10(Pi))
+x = Ti;
+p = polyfit(x, y, 1)
+b = 1/p(1)
+c = b * p(2)
+figure;
+C0 = [a b c];
+plot(Ti, log10P(C0,Ti), 'r-', Ti, Pe, 'k:', Ti, log10(Pi), 'b.');
+title('Antoine Equation');
+xlabel('T(K)');
+ylabel('log_{10}(P)');
+xlim([240 360]);
+ylim([2 6]);
+set(gca,'xtick',[240:20:360]);
+set(gca,'ytick',[2:1:6]);
+grid off;
+legend('polyfit method', 'known model', 'data', 'location', 'nw');
+
+%% Question 2
+clear all;
+% Part A
+xi = [1.0 1.4 1.9 2.1 2.7 3.0 3.3 3.9 4.2]';
+yi = [0.18 0.21 0.21 0.20 0.20 0.19 0.18 0.16 0.16]';
+
+A = [1./xi xi]
+Y = [1./yi]
+
+P1 = A\Y
+
+% Part B
+one = [1 1 1 1 1 1 1 1 1]';
+A = [one xi.^2]
+Y = [xi./yi]
+
+P2 = A\Y
+
+% Part C
+y = @(C, X) 1 ./ (C(1)./X + C(2).*X);
+C0 = [4 1];
+P3 = nlinfit(xi, yi, y, C0)
+
+% Part D
+names = {'basis {x^{-1},x}'
+         'basis {1, x^2}  '
+         'nlinfit         '}
+a = [P1(1);P2(1);P3(1)]
+b = [P1(2);P2(2);P3(2)]
+fprintf('   method            a        b  \n');
+fprintf('REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n');
+for i = 1:3,
+    fprintf('%-s   %6.4f   %6.4f\n', names{i}, a(i), b(i));
+end
+
+%% Question 3
+clear all;
+hi = 0:3:33
+pi = [1.2 0.92 0.66 0.47 0.31 0.19 0.12 0.075 0.046 0.029 0.018 0.011]
+
+% Part A
+
+% plot(hi, pi, 'r-', hi, pi, 'b.');
+p = polyfit(hi, log(pi), 1)
+h = linspace(0,35,201);
+y = exp(polyval(p,h));
+
+figure;
+plot(h, y, 'r-', hi, pi, 'b.');
+grid on;
+xlabel('\it{h}, km');
+ylabel('\it{p}, kg/m^3');
+xlim([0 35]);
+ylim([0 1.6]);
+set(gca,'xtick',[0:5:35]);
+set(gca,'ytick',[0:0.2:1.6]);
+legend('linear', 'data', 'location', 'ne');
+
+figure;
+plot(h, log(y), 'r-', hi, log(pi), 'b.');
+grid on;
+xlabel('\it{h}, km');
+ylabel('log(\it{p})');
+xlim([0 35]);
+ylim([-5 1]);
+set(gca,'xtick',[0:5:35]);
+set(gca,'ytick',[-5:1:1]);
+legend('linear', 'data', 'location', 'ne');
+
+% Part B
+p = polyfit(hi, log(pi), 2)
+h = linspace(0,35,201);
+y = exp(polyval(p,h));
+
+figure;
+plot(h, y, 'r-', hi, pi, 'b.');
+grid on;
+xlabel('\it{h}, km');
+ylabel('\it{p}, kg/m^3');
+xlim([0 35]);
+ylim([0 1.6]);
+set(gca,'xtick',[0:5:35]);
+set(gca,'ytick',[0:0.2:1.6]);
+legend('quadratic', 'data', 'location', 'ne');
+
+figure;
+plot(h, log(y), 'r-', hi, log(pi), 'b.');
+grid on;
+xlabel('\it{h}, km');
+ylabel('log(\it{p})');
+xlim([0 35]);
+ylim([-5 1]);
+set(gca,'xtick',[0:5:35]);
+set(gca,'ytick',[-5:1:1]);
+legend('quadratic', 'data', 'location', 'ne');
+
+% Part C
+h = [5 10]
+
+    % Part I
+r = exp(polyval(p,h))
+
+    % Part II
+spline = interp1(hi, pi, h, 'spline')
+
+    % Part III
+pchip = interp1(hi, pi, h, 'pchip')
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,365 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Corentin Rejaud, Matlab Week 9-10, Section 01</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-04-07"><meta name="DC.source" content="HW_Week_10_Matlab.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Corentin Rejaud, Matlab Week 9-10, Section 01</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Question 1</a></li><li><a href="#2">Question 2</a></li></ul></div><h2>Question 1<a name="1"></a></h2><p>Part A</p><pre class="codeinput">clear <span class="string">all</span>;
+v(1) = 0;
+t(1) = 0;
+T = 0.001;
+C = 0.005;
+n = 1;
+
+<span class="comment">% Solves for n_60</span>
+<span class="keyword">while</span> 1,
+    <span class="keyword">if</span> v(n) &gt; 60,
+        <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+    v(n+1) = v(n) + T*(20 - C*(v(n)^2));
+    t(n+1) = n*T;
+    n = n + 1;
+<span class="keyword">end</span>
+<span class="comment">% n right now is n_60</span>
+n_60 = n
+t_60 = t(n)
+<span class="comment">% t_60 becomes t(n)</span>
+
+<span class="comment">% Part B</span>
+<span class="comment">% finding t_stop, iterates until v(n) &lt;= 0</span>
+<span class="keyword">while</span> 1,
+    v(n+1) = v(n) + T.*( -3 - C.*(v(n).^2) );
+    t(n+1) = n.*T;
+    n = n + 1;
+    <span class="keyword">if</span> v(n) &lt;= 0;
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+n_stop = n
+t_stop = t(n)
+
+x = linspace(0, t(length(t)), length(t));
+plot(x, v, <span class="string">'b-'</span>, t_60, v(n_60), <span class="string">'ro'</span>, t_stop, v(n_stop), <span class="string">'bs'</span>);
+grid <span class="string">off</span>;
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'v (mph)'</span>);
+xlim([0 16]);
+ylim([0 80]);
+set(gca,<span class="string">'xtick'</span>,[0:2:16]);
+set(gca,<span class="string">'ytick'</span>,[0:10:80]);
+legend(<span class="string">'v(t)'</span>, <span class="string">'t_{60} = 5.75 sec'</span>, <span class="string">'t_{stop} = 15.41 sec'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+</pre><pre class="codeoutput">
+n_60 =
+
+        5751
+
+
+t_60 =
+
+    5.7500
+
+
+n_stop =
+
+       15411
+
+
+t_stop =
+
+   15.4100
+
+</pre><img vspace="5" hspace="5" src="HW_Week_10_Matlab_01.png" alt=""> <h2>Question 2<a name="2"></a></h2><p>Part A</p><pre class="codeinput">clear <span class="string">all</span>;
+
+A = [2 -1 2
+    1 2 2
+    0 -1 4]
+b = [2
+    4
+    12]
+
+x = A\b
+
+<span class="comment">% Part B</span>
+I = eye(size(A));
+D = diag(diag(A));
+
+B = I - D\A;
+c = D\b;
+
+tol = 10^(-10);
+x0 = [1,1,1]';
+xMatrix(:,1) = x0;
+k = 1;
+
+<span class="keyword">while</span> 1,
+    xnew = B*x0 + c;
+    xMatrix(:,k+1) = xnew;
+    <span class="keyword">if</span> norm(xnew-x0) &lt; tol,
+        <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+    x0 = xnew;
+    k = k+1;
+<span class="keyword">end</span>
+x = x0;
+k, x, norm(A*x-b)
+K = 0:k;
+figure;
+plot(K, xMatrix(1,:), <span class="string">'b-'</span>, K, xMatrix(2,:), <span class="string">'g-'</span>, K, xMatrix(3,:), <span class="string">'r-'</span>);
+title(<span class="string">'iterative solution'</span>);
+xlabel(<span class="string">'iteration index, {\it{k}}'</span>);
+ylabel(<span class="string">'{\it{x}}({\it{k}})'</span>);
+grid <span class="string">off</span>;
+xlim([0 100]);
+ylim([-5 5]);
+set(gca,<span class="string">'xtick'</span>,[0:10:100]);
+set(gca,<span class="string">'ytick'</span>,[-5:1:5]);
+legend(<span class="string">'x_{1} = -2'</span>, <span class="string">'x_{2} = 0'</span>, <span class="string">'x_{3} = 3'</span>, <span class="string">'location'</span>, <span class="string">'se'</span>);
+
+<span class="comment">% Part C</span>
+
+p = max(abs(eig(B)))
+
+<span class="comment">% Part D</span>
+<span class="keyword">for</span> K=1:k+1,
+    E(K) = norm(A*xMatrix(:,K) - b);
+<span class="keyword">end</span>
+K = 0:k;
+figure;
+semilogy(K, E(K+1), <span class="string">'b-'</span>);
+title(<span class="string">'iteration error, {\it{E}}({\it{k}})'</span>);
+xlabel(<span class="string">'iteration index, {\it{k}}'</span>);
+ylabel(<span class="string">'{\it{E}}({\it{k}})'</span>);
+grid <span class="string">on</span>;
+xlim([0 100]);
+ylim([10^-12 10^0]);
+set(gca,<span class="string">'xtick'</span>,[0:10:100]);
+set(gca,<span class="string">'ytick'</span>,[10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+</pre><pre class="codeoutput">
+A =
+
+     2    -1     2
+     1     2     2
+     0    -1     4
+
+
+b =
+
+     2
+     4
+    12
+
+
+x =
+
+   -2.0000
+    0.0000
+    3.0000
+
+
+k =
+
+    83
+
+
+x =
+
+   -2.0000
+   -0.0000
+    3.0000
+
+
+ans =
+
+   1.7487e-10
+
+
+p =
+
+    0.7426
+
+</pre><img vspace="5" hspace="5" src="HW_Week_10_Matlab_02.png" alt=""> <img vspace="5" hspace="5" src="HW_Week_10_Matlab_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Corentin Rejaud, Matlab Week 9-10, Section 01
+%% Question 1
+% Part A
+clear all;
+v(1) = 0;
+t(1) = 0;
+T = 0.001;
+C = 0.005;
+n = 1;
+
+% Solves for n_60
+while 1,
+    if v(n) > 60,
+        break;
+    end
+    v(n+1) = v(n) + T*(20 - C*(v(n)^2));
+    t(n+1) = n*T;
+    n = n + 1;
+end
+% n right now is n_60
+n_60 = n
+t_60 = t(n)
+% t_60 becomes t(n)
+
+% Part B
+% finding t_stop, iterates until v(n) <= 0
+while 1,
+    v(n+1) = v(n) + T.*( -3 - C.*(v(n).^2) );
+    t(n+1) = n.*T;
+    n = n + 1;
+    if v(n) <= 0;
+        break
+    end
+end
+n_stop = n
+t_stop = t(n)
+
+x = linspace(0, t(length(t)), length(t));
+plot(x, v, 'b-', t_60, v(n_60), 'ro', t_stop, v(n_stop), 'bs');
+grid off;
+xlabel('t (sec)');
+ylabel('v (mph)');
+xlim([0 16]);
+ylim([0 80]);
+set(gca,'xtick',[0:2:16]);
+set(gca,'ytick',[0:10:80]);
+legend('v(t)', 't_{60} = 5.75 sec', 't_{stop} = 15.41 sec', 'location', 'ne');
+
+%% Question 2
+% Part A
+clear all;
+
+A = [2 -1 2
+    1 2 2
+    0 -1 4]
+b = [2
+    4
+    12]
+
+x = A\b
+
+% Part B
+I = eye(size(A));
+D = diag(diag(A));
+
+B = I - D\A;
+c = D\b;
+
+tol = 10^(-10);
+x0 = [1,1,1]';
+xMatrix(:,1) = x0;
+k = 1;
+
+while 1,
+    xnew = B*x0 + c;
+    xMatrix(:,k+1) = xnew;
+    if norm(xnew-x0) < tol,
+        break;
+    end
+    x0 = xnew;
+    k = k+1;
+end
+x = x0;
+k, x, norm(A*x-b)
+K = 0:k;
+figure;
+plot(K, xMatrix(1,:), 'b-', K, xMatrix(2,:), 'g-', K, xMatrix(3,:), 'r-');
+title('iterative solution');
+xlabel('iteration index, {\it{k}}');
+ylabel('{\it{x}}({\it{k}})');
+grid off;
+xlim([0 100]);
+ylim([-5 5]);
+set(gca,'xtick',[0:10:100]);
+set(gca,'ytick',[-5:1:5]);
+legend('x_{1} = -2', 'x_{2} = 0', 'x_{3} = 3', 'location', 'se');
+
+% Part C
+
+p = max(abs(eig(B)))
+
+% Part D
+for K=1:k+1,
+    E(K) = norm(A*xMatrix(:,K) - b);
+end
+K = 0:k;
+figure;
+semilogy(K, E(K+1), 'b-');
+title('iteration error, {\it{E}}({\it{k}})');
+xlabel('iteration index, {\it{k}}');
+ylabel('{\it{E}}({\it{k}})');
+grid on;
+xlim([0 100]);
+ylim([10^-12 10^0]);
+set(gca,'xtick',[0:10:100]);
+set(gca,'ytick',[10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

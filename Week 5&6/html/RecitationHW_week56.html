@@ -1,0 +1,239 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Corentin Rejaud, Recitation Section 1, Week 5&amp;6</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-03"><meta name="DC.source" content="RecitationHW_week56.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Corentin Rejaud, Recitation Section 1, Week 5&amp;6</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Problem 1</a></li><li><a href="#2">Problem 2</a></li></ul></div><h2>Problem 1<a name="1"></a></h2><p>Part B</p><pre class="codeinput">h0 = 2;
+v0 = 20;
+t = 0:0.01:5;
+h = height(t,h0,v0);
+v(h&lt;0) = 0;
+h(h&lt;0) = 0;
+figure(1);
+plot(t, h, <span class="string">'b-'</span>);
+hold <span class="string">on</span>;
+<span class="comment">% Part C</span>
+[Hmax1, Tindex] = max(h);
+Tmax1 = t(Tindex);
+Tmax2 = fminbnd(@(t)-height(t,h0,v0),1,3);
+Hmax2 = height(Tmax2,h0,v0);
+plot(Tmax2,Hmax2,<span class="string">'ro'</span>);
+<span class="comment">% Part D</span>
+Tg = fzero(@(t) height(t,h0,v0), 4);
+plot(Tg, 0, <span class="string">'r.'</span>);
+legend(<span class="string">'height'</span>, <span class="string">'max'</span>, <span class="string">'ground'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+xlim([0,5]);
+ylim([0,24]);
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'h(t) (meters)'</span>);
+title(<span class="string">'height vs. time'</span>);
+set(gca,<span class="string">'xtick'</span>,[0:1:5]);
+set(gca,<span class="string">'ytick'</span>,[0:4:24]);
+<span class="comment">% Part E</span>
+hold <span class="string">off</span>;
+figure(2);
+[h,v] = height(t,h0,v0);
+v(h&lt;0) = 0;
+plot(t,v,<span class="string">'b-'</span>);
+hold <span class="string">on</span>;
+title(<span class="string">'velocity vs. time'</span>);
+xlabel(<span class="string">'t (sec)'</span>);
+ylabel(<span class="string">'v(t) (m/sec)'</span>);
+xlim([0,5]);
+ylim([-30,30]);
+set(gca,<span class="string">'xtick'</span>,[0:1:5]);
+set(gca,<span class="string">'ytick'</span>,[-30:10:30]);
+plot(Tmax2, 0, <span class="string">'ro'</span>);
+Vg = min(v);
+plot(Tg, Vg, <span class="string">'go'</span>);
+T = [<span class="string">'v_{max} = '</span>, num2str(Vg, <span class="string">'%3.2f'</span>)];
+legend(<span class="string">'v(t)'</span>, <span class="string">'v=0'</span>, T, <span class="string">'location'</span>, <span class="string">'sw'</span>);
+grid <span class="string">on</span>;
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="RecitationHW_week56_01.png" alt=""> <img vspace="5" hspace="5" src="RecitationHW_week56_02.png" alt=""> <h2>Problem 2<a name="2"></a></h2><p>Part A</p><pre class="codeinput">fp = fopen(<span class="string">'rec0506.dat'</span>);
+fgetl(fp);
+fgetl(fp);
+D = fscanf(fp, <span class="string">'%*s %*s %f %f %f %*s'</span>);
+D = reshape(D,3,7)';
+av1 = mean(D(:,1));
+av2 = mean(D(:,2));
+av3 = mean(D(:,3));
+AVE = mean(D,2);
+av4 = mean(AVE);
+frewind(fp);
+L1 = fgetl(fp);
+L2 = fgetl(fp);
+S = textscan(fp, <span class="string">'%s %s %*f %*f %*f %*s'</span>);
+N = S{1};
+I = S{2};
+fclose <span class="string">all</span>;
+[Ds, i] = sortrows(D,-1);
+Ds = Ds([2,1,3,4,5,6,7],:);
+i = i([2,1,3,4,5,6,7],:);
+Ns = N(i);
+Is = I(i);
+AVEs = AVE(i);
+Ds1 = Ds(:,1);
+Ds2 = Ds(:,2);
+Ds3 = Ds(:,3);
+fp = fopen(<span class="string">'rec0506b.dat'</span>, <span class="string">'w'</span>);
+fprintf(fp,[L1, <span class="string">'\n'</span>]);
+fprintf(fp,[L2, <span class="string">'\n'</span>]);
+<span class="keyword">for</span> i=1:7,
+fprintf(fp, <span class="string">'%-13s  %3.0f     %3.0f     %3.0f     | %5.2f\n'</span>, [Ns{i}, <span class="string">' '</span>,Is{i}], Ds1(i), Ds2(i), Ds3(i), AVEs(i));
+<span class="keyword">end</span>
+fprintf(fp,[L2, <span class="string">'\n'</span>]);
+fprintf(fp, <span class="string">'     exam_AV   %5.2f   %5.2f   %5.2f   | %5.2f\n'</span>, av1, av2, av3, av4);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Corentin Rejaud, Recitation Section 1, Week 5&6
+%% Problem 1
+% Part B
+h0 = 2;
+v0 = 20;
+t = 0:0.01:5;
+h = height(t,h0,v0);
+v(h<0) = 0;
+h(h<0) = 0;
+figure(1);
+plot(t, h, 'b-');
+hold on;
+% Part C
+[Hmax1, Tindex] = max(h);
+Tmax1 = t(Tindex);
+Tmax2 = fminbnd(@(t)-height(t,h0,v0),1,3);
+Hmax2 = height(Tmax2,h0,v0);
+plot(Tmax2,Hmax2,'ro');
+% Part D
+Tg = fzero(@(t) height(t,h0,v0), 4);
+plot(Tg, 0, 'r.');
+legend('height', 'max', 'ground', 'location', 'ne');
+xlim([0,5]);
+ylim([0,24]);
+xlabel('t (sec)');
+ylabel('h(t) (meters)');
+title('height vs. time');
+set(gca,'xtick',[0:1:5]);
+set(gca,'ytick',[0:4:24]);
+% Part E
+hold off;
+figure(2);
+[h,v] = height(t,h0,v0);
+v(h<0) = 0;
+plot(t,v,'b-');
+hold on;
+title('velocity vs. time');
+xlabel('t (sec)');
+ylabel('v(t) (m/sec)');
+xlim([0,5]);
+ylim([-30,30]);
+set(gca,'xtick',[0:1:5]);
+set(gca,'ytick',[-30:10:30]);
+plot(Tmax2, 0, 'ro');
+Vg = min(v);
+plot(Tg, Vg, 'go');
+T = ['v_{max} = ', num2str(Vg, '%3.2f')];
+legend('v(t)', 'v=0', T, 'location', 'sw');
+grid on;
+hold off;
+
+%% Problem 2
+% Part A
+fp = fopen('rec0506.dat');
+fgetl(fp);
+fgetl(fp);
+D = fscanf(fp, '%*s %*s %f %f %f %*s');
+D = reshape(D,3,7)';
+av1 = mean(D(:,1));
+av2 = mean(D(:,2));
+av3 = mean(D(:,3));
+AVE = mean(D,2);
+av4 = mean(AVE);
+frewind(fp);
+L1 = fgetl(fp);
+L2 = fgetl(fp);
+S = textscan(fp, '%s %s %*f %*f %*f %*s');
+N = S{1};
+I = S{2};
+fclose all;
+[Ds, i] = sortrows(D,-1);
+Ds = Ds([2,1,3,4,5,6,7],:);
+i = i([2,1,3,4,5,6,7],:);
+Ns = N(i);
+Is = I(i);
+AVEs = AVE(i);
+Ds1 = Ds(:,1);
+Ds2 = Ds(:,2);
+Ds3 = Ds(:,3);
+fp = fopen('rec0506b.dat', 'w');
+fprintf(fp,[L1, '\n']);
+fprintf(fp,[L2, '\n']);
+for i=1:7,
+fprintf(fp, '%-13s  %3.0f     %3.0f     %3.0f     | %5.2f\n', [Ns{i}, ' ',Is{i}], Ds1(i), Ds2(i), Ds3(i), AVEs(i));
+end
+fprintf(fp,[L2, '\n']);
+fprintf(fp, '     exam_AV   %5.2f   %5.2f   %5.2f   | %5.2f\n', av1, av2, av3, av4);
+##### SOURCE END #####
+--></body></html>

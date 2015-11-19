@@ -1,0 +1,25 @@
+% viscosity of air
+% ----------------
+%
+% Reference: B. R. Munson, T. H. Okiishi, W. W. Huebsch, A. P. Rothmayer,
+%            Fundamentals of Fluid Mechanics, 7/e, Wiley, New York, 2013,
+%            (data from Table B.4, Appendix B).
+%
+% Celcius   viscosity in 10^5 * N*s/m^2
+%   T_C          v
+% -------------------------------------
+   -20          1.63
+     0          1.71
+    20          1.82
+    40          1.87
+    70          2.03
+   100          2.17
+   200          2.53
+   300          2.98
+   400          3.32
+   500          3.64
+
+     
+     
+     
+              

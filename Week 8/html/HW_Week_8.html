@@ -1,0 +1,750 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Corentin Rejaud - Recitation Week 8 - 03/24/2014</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-24"><meta name="DC.source" content="HW_Week_8.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Corentin Rejaud - Recitation Week 8 - 03/24/2014</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Question 1</a></li><li><a href="#2">Question 2</a></li><li><a href="#3">Question 3</a></li><li><a href="#4">fsum</a></li><li><a href="#5">f</a></li></ul></div><h2>Question 1<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>;
+<span class="comment">% Part A</span>
+method1 = 0;
+S1 = @(k) (k + 1).*2.^k;
+<span class="keyword">for</span> N = 0:15,
+    method1 = method1 + S1(N);
+<span class="keyword">end</span>
+method1
+
+method2 = 0;
+N = 0;
+<span class="keyword">while</span> N &lt;= 15,
+    method2 = method2 + S1(N);
+    N = N + 1;
+<span class="keyword">end</span>
+method2
+
+method3 = 0;
+N = 0;
+<span class="keyword">while</span> 1,
+    method3 = method3 + S1(N);
+    N = N + 1;
+    <span class="keyword">if</span> N &gt; 15,
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+method3
+
+N = 0:15;
+method4 = cumsum(S1(N));
+method4(length(method4)) <span class="comment">% Last element of method4</span>
+
+S2 = @(N) 1 + N.*2.^(N+1);
+method5 = S2(15);
+method5
+
+<span class="comment">% Part B</span>
+N = 0:15;
+method1 = fsum(N,1)
+method2 = fsum(N,2)
+method3 = fsum(N,3)
+method4 = fsum(N,4);
+method4(length(method4))
+method5 = fsum(N,5)
+
+<span class="comment">% Part C</span>
+<span class="comment">% Forever-while loop</span>
+N = 0;
+<span class="keyword">while</span> 1,
+    S = fsum(N,3);
+    <span class="keyword">if</span> S &gt; 10^7
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    N = N + 1;
+<span class="keyword">end</span>
+N
+
+<span class="comment">% Conventional-while loop</span>
+N = -1; <span class="comment">% It's -1 so when it enters the while loop, it tests 0 first</span>
+S = 0;
+<span class="keyword">while</span> S &lt;= 10^7
+    N = N + 1;
+    S = fsum(N,3);
+<span class="keyword">end</span>
+
+<span class="comment">% Part D</span>
+f = @(N) 1 + N.*2.^(N + 1) - 10^7;
+fzero(f,20)
+</pre><pre class="codeoutput">
+method1 =
+
+      983041
+
+
+method2 =
+
+      983041
+
+
+method3 =
+
+      983041
+
+
+ans =
+
+      983041
+
+
+method5 =
+
+      983041
+
+
+method1 =
+
+      983041
+
+
+method2 =
+
+      983041
+
+
+method3 =
+
+      983041
+
+
+ans =
+
+      983041
+
+
+method5 =
+
+      983041
+
+
+N =
+
+    19
+
+
+ans =
+
+   18.0774
+
+</pre><h2>Question 2<a name="2"></a></h2><pre class="codeinput">clear <span class="string">all</span>;
+<span class="comment">% Part A</span>
+tol = 1e-10;
+k = 1;
+x(1) = 1;
+<span class="keyword">while</span> 1,
+    x(k+1) = cos(x(k));
+    <span class="keyword">if</span> abs(x(k+1) - x(k)) &lt; tol,
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    k = k + 1;
+<span class="keyword">end</span>
+k
+x(k)
+
+figure(1);
+plot(1:k+1, x, <span class="string">'b-'</span>, k+1, x(k+1), <span class="string">'ro'</span>);
+title(<span class="string">'the iteration x(k+1) = cos(x(k))'</span>);
+xlabel(<span class="string">'iterations, \it{k}'</span>);
+ylabel(<span class="string">'\it{x}(\it{k})'</span>);
+grid <span class="string">off</span>;
+set(gca, <span class="string">'xtick'</span>, [0:10:60]);
+set(gca, <span class="string">'ytick'</span>, [0.2:0.1:1.0]);
+xlim([0 60]);
+ylim([0.2 1.0]);
+
+figure(2);
+K = 1:k;
+e = abs(x(K+1) - x(K));
+semilogy(K, e, <span class="string">'b-'</span>, 0:1:60, tol, <span class="string">'r--'</span>, <span class="string">'MarkerSize'</span>, 500);
+title(<span class="string">'\it{e}(\it{k}) = |\it{x}(\it{k} + 1) - \it{x}(\it{k})|'</span>);
+xlabel(<span class="string">'iterations, \it{k}'</span>);
+ylabel(<span class="string">'\it{e}(\it{k})'</span>);
+grid <span class="string">off</span>;
+set(gca, <span class="string">'xtick'</span>, [0:10:60]);
+set(gca, <span class="string">'ytick'</span>, [10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+xlim([0 60]);
+ylim([10^-12 10^0]);
+legend(<span class="string">'\it{e}(\it{k})'</span>, <span class="string">'tol = 10^-10'</span>, <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+<span class="comment">% Part B</span>
+tol = 1e-10;
+k2 = 1;
+x2(1) = 1;
+x2(k2+1) = cos(x2(k2));
+<span class="keyword">while</span> abs(x2(k2+1) - x2(k2)) &gt;= tol
+    k2 = k2 + 1;
+    x2(k2+1) = cos(x2(k2));
+<span class="keyword">end</span>
+k2
+x2(k2)
+
+<span class="comment">% Part C</span>
+y = @(x) cos(x) - x;
+fzero(y, 1)
+
+fprintf(<span class="string">'%13.11f     %13.11f \n'</span>, fzero(y,1), x(k));
+
+<span class="comment">% Part D</span>
+xPoints = linspace(0, 2, 101);
+figure(3);
+plot(xPoints, cos(xPoints), <span class="string">'b-'</span>, xPoints, xPoints, <span class="string">'r-'</span>, fzero(y, 1), fzero(y, 1), <span class="string">'m.'</span>, <span class="string">'MarkerSize'</span>, 20);
+title(<span class="string">'graphical solution of x=cos(x)'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+xlim([0 2]);
+ylim([-0.5 2]);
+set(gca, <span class="string">'xtick'</span>, [0:0.5:2]);
+set(gca, <span class="string">'ytick'</span>, [-0.5:0.5:2]);
+grid <span class="string">off</span>;
+legend(<span class="string">'y = cos(x)'</span>, <span class="string">'y = x'</span>, <span class="string">'x = cos(x)'</span>, <span class="string">'location'</span>, <span class="string">'nw'</span>);
+</pre><pre class="codeoutput">
+k =
+
+    58
+
+
+ans =
+
+    0.7391
+
+
+k2 =
+
+    58
+
+
+ans =
+
+    0.7391
+
+
+ans =
+
+    0.7391
+
+0.73908513322     0.73908513317 
+</pre><img vspace="5" hspace="5" src="HW_Week_8_01.png" alt=""> <img vspace="5" hspace="5" src="HW_Week_8_02.png" alt=""> <img vspace="5" hspace="5" src="HW_Week_8_03.png" alt=""> <h2>Question 3<a name="3"></a></h2><p>Part A</p><pre class="codeinput">clear <span class="string">all</span>;
+k = 0:50;
+tol = 10^-10;
+fzero(@(k) f(k) - tol, 40);
+kPoint = fzero(@(k) f(k) - tol, 40)
+kPoint = ceil(kPoint)
+
+figure(5);
+semilogy(k, f(k), <span class="string">'b-'</span>, kPoint, f(kPoint), <span class="string">'r.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'k'</span>);
+ylabel(<span class="string">'f(k)'</span>);
+title(<span class="string">'f(k) = (k+1)/2^k'</span>);
+xlim([0 50]);
+ylim([10^-14 10^1]);
+set(gca, <span class="string">'xtick'</span>, [0:10:50]);
+set(gca, <span class="string">'ytick'</span>, [10^-14 10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+legend(<span class="string">'f(k)'</span>, char(<span class="string">'stop point'</span>, <span class="string">'tol=10^{-10}'</span>), <span class="string">'location'</span>, <span class="string">'ne'</span>);
+
+<span class="comment">% Part B</span>
+k = 1;
+S(1) = 1;
+<span class="keyword">while</span> 1,
+    S(k + 1) = (k + 1)./(2.^k) + S(k);
+    <span class="keyword">if</span> abs(S(k+1) - S(k)) &lt;= tol,
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    k = k + 1;
+<span class="keyword">end</span>
+k
+S(k)
+
+K = 1:k + 1;
+K2 = 0:k;
+exactPoint = fzero(@(K2) f(K2) - tol, 40)
+figure(6);
+plot(K2, S(K), <span class="string">'b-'</span>, k, S(k), <span class="string">'ro'</span>, k, 4, <span class="string">'r.'</span>);
+grid <span class="string">on</span>;
+xlabel(<span class="string">'iterations, k'</span>);
+ylabel(<span class="string">'S(k+1)'</span>);
+set(gca, <span class="string">'xtick'</span>, [0:10:50]);
+set(gca, <span class="string">'ytick'</span>, [0:1:5]);
+xlim([0 50]);
+ylim([0 5]);
+legend(<span class="string">'S(k+1)'</span>, <span class="string">'computed'</span>, <span class="string">'exact limit'</span>, <span class="string">'location'</span>, <span class="string">'se'</span>);
+
+<span class="comment">% Part C</span>
+k = 2;
+S(1) = 1;
+S(2) = (1+1)/2^1 + S(1);
+<span class="keyword">while</span> abs(S(k) - S(k-1)) &gt; tol,
+    S(k+1) = (k + 1)/(2^k) + S(k);
+    k = k + 1;
+<span class="keyword">end</span>
+k = k - 1;
+S(k)
+
+<span class="comment">% Part F</span>
+S_new = 1;
+k = 1;
+<span class="keyword">while</span> 1,
+    S_old = S_new;
+    S_new = (k + 1)/(2^k) + S_old;
+    <span class="keyword">if</span> S_new - S_old &lt;= tol
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    k = k + 1;
+<span class="keyword">end</span>
+k
+S_new
+E = abs(S_new - 4)
+
+S_new = 2;
+S_old = 1;
+k = 1;
+<span class="keyword">while</span> S_new - S_old &gt; tol,
+    k = k + 1;
+    S_old = S_new;
+    S_new = (k + 1)/(2^k) + S_old;
+<span class="keyword">end</span>
+k
+S_new
+E = abs(S_new - 4)
+</pre><pre class="codeoutput">
+kPoint =
+
+   38.5239
+
+
+kPoint =
+
+    39
+
+
+k =
+
+    39
+
+
+ans =
+
+    4.0000
+
+
+exactPoint =
+
+   38.5239
+
+
+ans =
+
+    4.0000
+
+
+k =
+
+    39
+
+
+S_new =
+
+    4.0000
+
+
+E =
+
+   7.6398e-11
+
+
+k =
+
+    39
+
+
+S_new =
+
+    4.0000
+
+
+E =
+
+   7.6398e-11
+
+</pre><img vspace="5" hspace="5" src="HW_Week_8_04.png" alt=""> <img vspace="5" hspace="5" src="HW_Week_8_05.png" alt=""> <h2>fsum<a name="4"></a></h2><pre class="codeinput"><span class="comment">%function S = fsum(N,m)</span>
+<span class="comment">%S1 = @(k) (k + 1).*2.^k;</span>
+<span class="comment">%switch m</span>
+<span class="comment">%    case 1</span>
+<span class="comment">%        S = 0;</span>
+<span class="comment">%        for k = N,</span>
+<span class="comment">%            S = S + S1(k);</span>
+<span class="comment">%        end</span>
+<span class="comment">%    case 2</span>
+<span class="comment">%        k = 0;</span>
+<span class="comment">%        S = 0;</span>
+<span class="comment">%        while k &lt; length(N),</span>
+<span class="comment">%            S = S + S1(k);</span>
+<span class="comment">%            k = k + 1;</span>
+<span class="comment">%        end</span>
+<span class="comment">%    case 3</span>
+<span class="comment">%        k = 0;</span>
+<span class="comment">%        S = 0;</span>
+<span class="comment">%        while 1,</span>
+<span class="comment">%            S = S + S1(k);</span>
+<span class="comment">%            k = k + 1;</span>
+<span class="comment">%            if k &gt; N(length(N)),</span>
+<span class="comment">%                break</span>
+<span class="comment">%            end</span>
+<span class="comment">%        end</span>
+<span class="comment">%    case 4</span>
+<span class="comment">%        S = cumsum(S1(N));</span>
+<span class="comment">%    case 5</span>
+<span class="comment">%        S2 = @(N) 1 + N.*2.^(N+1);</span>
+<span class="comment">%        S = S2(15);</span>
+<span class="comment">%end</span>
+<span class="comment">%end</span>
+</pre><h2>f<a name="5"></a></h2><pre class="codeinput"><span class="comment">%function S = f(k)</span>
+<span class="comment">%</span>
+<span class="comment">%S1 =@(k) (k + 1)./(2.^k);</span>
+<span class="comment">%S = S1(k);</span>
+<span class="comment">%</span>
+<span class="comment">%end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Corentin Rejaud - Recitation Week 8 - 03/24/2014
+%% Question 1
+clear all;
+% Part A
+method1 = 0;
+S1 = @(k) (k + 1).*2.^k;
+for N = 0:15,
+    method1 = method1 + S1(N);
+end
+method1
+
+method2 = 0;
+N = 0;
+while N <= 15,
+    method2 = method2 + S1(N);
+    N = N + 1;
+end
+method2
+
+method3 = 0;
+N = 0;
+while 1,
+    method3 = method3 + S1(N);
+    N = N + 1;
+    if N > 15,
+        break
+    end
+end
+method3
+
+N = 0:15;
+method4 = cumsum(S1(N));
+method4(length(method4)) % Last element of method4
+
+S2 = @(N) 1 + N.*2.^(N+1);
+method5 = S2(15);
+method5
+
+% Part B
+N = 0:15;
+method1 = fsum(N,1)
+method2 = fsum(N,2)
+method3 = fsum(N,3)
+method4 = fsum(N,4);
+method4(length(method4))
+method5 = fsum(N,5)
+
+% Part C
+% Forever-while loop
+N = 0;
+while 1,
+    S = fsum(N,3);
+    if S > 10^7
+        break
+    end
+    N = N + 1;
+end
+N
+
+% Conventional-while loop
+N = -1; % It's -1 so when it enters the while loop, it tests 0 first
+S = 0;
+while S <= 10^7
+    N = N + 1;
+    S = fsum(N,3);
+end
+
+% Part D
+f = @(N) 1 + N.*2.^(N + 1) - 10^7;
+fzero(f,20)
+
+%% Question 2
+clear all;
+% Part A
+tol = 1e-10;
+k = 1;
+x(1) = 1;
+while 1,
+    x(k+1) = cos(x(k));
+    if abs(x(k+1) - x(k)) < tol,
+        break
+    end
+    k = k + 1;
+end
+k
+x(k)
+
+figure(1);
+plot(1:k+1, x, 'b-', k+1, x(k+1), 'ro');
+title('the iteration x(k+1) = cos(x(k))');
+xlabel('iterations, \it{k}');
+ylabel('\it{x}(\it{k})');
+grid off;
+set(gca, 'xtick', [0:10:60]);
+set(gca, 'ytick', [0.2:0.1:1.0]);
+xlim([0 60]);
+ylim([0.2 1.0]);
+
+figure(2);
+K = 1:k;
+e = abs(x(K+1) - x(K));
+semilogy(K, e, 'b-', 0:1:60, tol, 'rREPLACE_WITH_DASH_DASH', 'MarkerSize', 500);
+title('\it{e}(\it{k}) = |\it{x}(\it{k} + 1) - \it{x}(\it{k})|');
+xlabel('iterations, \it{k}');
+ylabel('\it{e}(\it{k})');
+grid off;
+set(gca, 'xtick', [0:10:60]);
+set(gca, 'ytick', [10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+xlim([0 60]);
+ylim([10^-12 10^0]);
+legend('\it{e}(\it{k})', 'tol = 10^-10', 'location', 'ne');
+
+% Part B
+tol = 1e-10;
+k2 = 1;
+x2(1) = 1;
+x2(k2+1) = cos(x2(k2));
+while abs(x2(k2+1) - x2(k2)) >= tol
+    k2 = k2 + 1;
+    x2(k2+1) = cos(x2(k2));
+end
+k2
+x2(k2)
+
+% Part C
+y = @(x) cos(x) - x;
+fzero(y, 1)
+
+fprintf('%13.11f     %13.11f \n', fzero(y,1), x(k));
+
+% Part D
+xPoints = linspace(0, 2, 101);
+figure(3);
+plot(xPoints, cos(xPoints), 'b-', xPoints, xPoints, 'r-', fzero(y, 1), fzero(y, 1), 'm.', 'MarkerSize', 20);
+title('graphical solution of x=cos(x)');
+xlabel('x');
+ylabel('y');
+xlim([0 2]);
+ylim([-0.5 2]);
+set(gca, 'xtick', [0:0.5:2]);
+set(gca, 'ytick', [-0.5:0.5:2]);
+grid off;
+legend('y = cos(x)', 'y = x', 'x = cos(x)', 'location', 'nw');
+
+%% Question 3
+% Part A
+clear all;
+k = 0:50;
+tol = 10^-10;
+fzero(@(k) f(k) - tol, 40);
+kPoint = fzero(@(k) f(k) - tol, 40)
+kPoint = ceil(kPoint)
+
+figure(5);
+semilogy(k, f(k), 'b-', kPoint, f(kPoint), 'r.');
+grid on;
+xlabel('k');
+ylabel('f(k)');
+title('f(k) = (k+1)/2^k');
+xlim([0 50]);
+ylim([10^-14 10^1]);
+set(gca, 'xtick', [0:10:50]);
+set(gca, 'ytick', [10^-14 10^-12 10^-10 10^-8 10^-6 10^-4 10^-2 10^0]);
+legend('f(k)', char('stop point', 'tol=10^{-10}'), 'location', 'ne');
+
+% Part B
+k = 1;
+S(1) = 1;
+while 1,
+    S(k + 1) = (k + 1)./(2.^k) + S(k);
+    if abs(S(k+1) - S(k)) <= tol,
+        break
+    end
+    k = k + 1;
+end
+k
+S(k)
+
+K = 1:k + 1;
+K2 = 0:k;
+exactPoint = fzero(@(K2) f(K2) - tol, 40)
+figure(6);
+plot(K2, S(K), 'b-', k, S(k), 'ro', k, 4, 'r.');
+grid on;
+xlabel('iterations, k');
+ylabel('S(k+1)');
+set(gca, 'xtick', [0:10:50]);
+set(gca, 'ytick', [0:1:5]);
+xlim([0 50]);
+ylim([0 5]);
+legend('S(k+1)', 'computed', 'exact limit', 'location', 'se');
+
+% Part C
+k = 2;
+S(1) = 1;
+S(2) = (1+1)/2^1 + S(1);
+while abs(S(k) - S(k-1)) > tol,
+    S(k+1) = (k + 1)/(2^k) + S(k);
+    k = k + 1;
+end
+k = k - 1;
+S(k)
+
+% Part F
+S_new = 1;
+k = 1;
+while 1,
+    S_old = S_new;
+    S_new = (k + 1)/(2^k) + S_old;
+    if S_new - S_old <= tol
+        break
+    end
+    k = k + 1;
+end
+k
+S_new
+E = abs(S_new - 4)
+
+S_new = 2;
+S_old = 1;
+k = 1;
+while S_new - S_old > tol,
+    k = k + 1;
+    S_old = S_new;
+    S_new = (k + 1)/(2^k) + S_old;
+end
+k
+S_new
+E = abs(S_new - 4)
+
+
+%% fsum
+%function S = fsum(N,m)
+%S1 = @(k) (k + 1).*2.^k;
+%switch m
+%    case 1
+%        S = 0;
+%        for k = N,
+%            S = S + S1(k);
+%        end
+%    case 2
+%        k = 0;
+%        S = 0;
+%        while k < length(N),
+%            S = S + S1(k);
+%            k = k + 1;
+%        end
+%    case 3
+%        k = 0;
+%        S = 0;
+%        while 1,
+%            S = S + S1(k);
+%            k = k + 1;
+%            if k > N(length(N)),
+%                break
+%            end
+%        end
+%    case 4
+%        S = cumsum(S1(N));
+%    case 5
+%        S2 = @(N) 1 + N.*2.^(N+1);
+%        S = S2(15);
+%end
+%end
+
+
+%% f
+%function S = f(k)
+%
+%S1 =@(k) (k + 1)./(2.^k);
+%S = S1(k);
+%
+%end
+##### SOURCE END #####
+--></body></html>
